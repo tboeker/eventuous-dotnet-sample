@@ -31,4 +31,5 @@ app.MapDiscoveredCommands<Payment>();
 
 app.UseSwaggerUI();
 
+app.Run("http://localhost:5052");
 app.Run();
