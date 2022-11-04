@@ -29,7 +29,7 @@ public static class Registrations {
 
         services.AddEventStoreClient(configuration["EventStore:ConnectionString"]);
         services.AddAggregateStore<EsdbEventStore>();
-        services.AddApplicationService<BookingsCommandService, Booking>();
+        services.AddApplicationService<CommandService, Booking>();
 
         services.AddSingleton<Services.IsRoomAvailable>((id, period) => new ValueTask<bool>(true));
 

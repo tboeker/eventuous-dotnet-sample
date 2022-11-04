@@ -5,8 +5,8 @@ using Eventuous.AspNetCore.Web;
 
 namespace Bookings.Payments.Application;
 
-public class CommandService : ApplicationService<Payment, PaymentState, PaymentId> {
-    public CommandService(IAggregateStore store) : base(store) {
+public class PaymentCommandService : ApplicationService<Payment, PaymentState, PaymentId> {
+    public PaymentCommandService(IAggregateStore store) : base(store) {
         OnNew<PaymentCommands.RecordPayment>(
             cmd => new PaymentId(cmd.PaymentId),
             (payment, cmd) => payment.ProcessPayment(

@@ -9,19 +9,3 @@ public class Payment : Aggregate<PaymentState> {
     )
         => Apply(new PaymentRecorded(paymentId, bookingId, amount.Amount, amount.Currency, method, provider));
 }
-
-public record PaymentState : State<PaymentState> {
-    public string BookingId { get; init; } = null!;
-    public float  Amount    { get; init; }
-
-    public PaymentState() {
-        On<PaymentRecorded>(
-            (state, recorded) => state with {
-                BookingId = recorded.BookingId,
-                Amount = recorded.Amount
-            }
-        );
-    }
-}
-
-public record PaymentId(string Value) : AggregateId(Value);

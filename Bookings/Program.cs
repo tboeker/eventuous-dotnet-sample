@@ -8,6 +8,8 @@ using NodaTime.Serialization.SystemTextJson;
 using Serilog;
 using Serilog.Events;
 
+Environment.SetEnvironmentVariable("ASPNETCORE_URLS", "http://localhost:5051");
+
 TypeMap.RegisterKnownEventTypes(typeof(BookingEvents.V1.RoomBooked).Assembly);
 
 Log.Logger = new LoggerConfiguration()
@@ -40,18 +42,22 @@ app.UseSwagger().UseSwaggerUI();
 app.MapControllers();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
-var factory  = app.Services.GetRequiredService<ILoggerFactory>();
+var factory = app.Services.GetRequiredService<ILoggerFactory>();
 var listener = new LoggingEventListener(factory, "OpenTelemetry");
 
-try {
-    app.Run("http://localhost:5051");
+try
+{
+    // app.Run("http://localhost:5051");
+    app.Run();
     return 0;
 }
-catch (Exception e) {
+catch (Exception e)
+{
     Log.Fatal(e, "Host terminated unexpectedly");
     return 1;
 }
-finally {
+finally
+{
     Log.CloseAndFlush();
     listener.Dispose();
 }

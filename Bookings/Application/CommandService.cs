@@ -6,8 +6,8 @@ using static Bookings.Application.BookingCommands;
 
 namespace Bookings.Application;
 
-public class BookingsCommandService : ApplicationService<Booking, BookingState, BookingId> {
-    public BookingsCommandService(IAggregateStore store, Services.IsRoomAvailable isRoomAvailable) : base(store) {
+public class CommandService : ApplicationService<Booking, BookingState, BookingId> {
+    public CommandService(IAggregateStore store, Services.IsRoomAvailable isRoomAvailable) : base(store) {
         OnNewAsync<BookRoom>(
             cmd => new BookingId(cmd.BookingId),
             (booking, cmd, _) => booking.BookRoom(
